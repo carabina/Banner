@@ -1,0 +1,16 @@
+PODS:
+  - Banner (0.1.0)
+
+DEPENDENCIES:
+  - Banner (from `../`)
+
+EXTERNAL SOURCES:
+  Banner:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Banner: 52d3c01c3fa42ea7f34e4e246e88d0f5d8932df1
+
+PODFILE CHECKSUM: f9adc2e5fab639c34b59271506d446e198b7b47c
+
+COCOAPODS: 1.4.0
