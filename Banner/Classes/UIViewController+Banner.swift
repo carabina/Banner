@@ -11,8 +11,11 @@ public extension UIViewController {
     
     /** Display a banner on top of the current view controller. */
     public func showBanner(banner: Banner, duration: Double) {
-        if view.subviews.contains(banner) { return }
-        else { print("We gucci fam") }
+        if Banner.OPEN_BANNERS >= Banner.MAX_BANNERS { return }
+        else {
+            Banner.OPEN_BANNERS += 1
+        }
+        
         let to: CGRect = banner.frame
         
         // Do some setup.
@@ -47,7 +50,7 @@ public extension UIViewController {
                 banner.frame = CGRect(x: banner.frame.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer()
+                banner.startTimer(dismissDuration: duration)
             }) 
             break
         case .topRight:
@@ -55,7 +58,7 @@ public extension UIViewController {
                 banner.frame = CGRect(x: to.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer()
+                banner.startTimer(dismissDuration: duration)
             })
             break
         case .bottomLeft:
@@ -63,7 +66,7 @@ public extension UIViewController {
                 banner.frame = CGRect(x: banner.frame.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer()
+                banner.startTimer(dismissDuration: duration)
             })
             break
         case .bottomRight:
@@ -71,7 +74,7 @@ public extension UIViewController {
                 banner.frame = CGRect(x: to.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer()
+                banner.startTimer(dismissDuration: duration)
             }) 
             break
         }

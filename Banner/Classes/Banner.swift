@@ -30,25 +30,43 @@ public class Banner: UIView {
     /** Whether or not a banner is already open. */
     static var BANNER_OPEN: Bool = false
     
+    /** The maximum number of banners that are allowed to be shown at the same time. */
+    static var MAX_BANNERS: Int = 4
+    
+    /** The total number of banners that are currently open. */
+    internal static var OPEN_BANNERS: Int = 0
+    
+    
+    
     /** Where the banner is located in the view. */
-    public var location: BannerLocation
+    internal var location: BannerLocation
     
     /** The width and height of the banner. */
     public var size: CGSize {
-        didSet {
-            self.updateFrame()
-        }
+        didSet { self.updateFrame() }
     }
     
     /** The padding on this banner (xPadding, yPadding). */
     public var padding: (CGFloat, CGFloat) {
+        didSet { self.updateFrame() }
+    }
+    
+    // Fix this later.
+    /** The corner radius of the banner. */
+    public var cornerRadius: CGFloat {
         didSet {
+            self.layer.cornerRadius = cornerRadius
             self.updateFrame()
+            self.updateSubviews()
         }
     }
     
-    /** How long the timer should stay on screen. */
-    internal var timer: Timer
+    /** How long the timer should stay on screen in seconds. 0 means it never goes away. */
+    public var displayTime: Double
+    
+    /** The duration of time to animate the dismiss. */
+    internal var dismissAnimationTime: Double
+    
     
     
     
@@ -63,7 +81,9 @@ public class Banner: UIView {
         location = .bottomRight
         size = CGSize(width: 100, height: 50)
         padding = (20, 20)
-        timer = Timer()
+        cornerRadius = 0
+        displayTime = 1
+        dismissAnimationTime = 1
         super.init(coder: aDecoder)
         
         self.config()
@@ -73,7 +93,9 @@ public class Banner: UIView {
         self.location = location
         self.size = CGSize(width: 100, height: 50)
         self.padding = (20, 20)
-        self.timer = Timer()
+        self.cornerRadius = 0
+        self.displayTime = 1
+        self.dismissAnimationTime = 1
         
         switch location {
         case .topLeft:
@@ -131,6 +153,7 @@ public class Banner: UIView {
     internal func updateSubviews() {
         for view in subviews {
             view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+            view.layer.cornerRadius = layer.borderWidth
         }
     }
     
@@ -143,15 +166,62 @@ public class Banner: UIView {
     
     
     /** Starts the timer to dismiss this banner. */
-    internal func startTimer() {
+    internal func startTimer(dismissDuration: Double) {
+        self.dismissAnimationTime = dismissDuration
         
+        let _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(Banner.decrementTimer(timer:)), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func decrementTimer(timer: Timer) {
+        if displayTime > 0 {
+            displayTime -= 1
+        } else {
+            timer.invalidate()
+            dismiss()
+        }
     }
     
     
     /** Dismisses the banner. */
     public func dismiss() {
         
+        switch location {
+        case .topLeft:
+            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+                self.frame = CGRect(x: self.padding.0, y: self.padding.1, width: 0, height: self.size.height)
+                self.updateSubviews()
+            }, completion: { (b) in
+                self.removeFromSuperview()
+            })
+            break
+        case .topRight:
+            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+                self.frame = CGRect(x: UIScreen.main.bounds.maxX - self.padding.0, y: self.padding.1, width: 0, height: self.size.height)
+                self.updateSubviews()
+            }, completion: { (b) in
+                self.removeFromSuperview()
+            })
+            break
+        case .bottomLeft:
+            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+                self.frame = CGRect(x: self.padding.0, y: UIScreen.main.bounds.height - self.size.height - self.padding.1, width: 0, height: self.size.height)
+                self.updateSubviews()
+            }, completion: { (b) in
+                self.removeFromSuperview()
+            })
+            break
+        case .bottomRight:
+            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+                self.frame = CGRect(x: UIScreen.main.bounds.width - self.padding.0, y: UIScreen.main.bounds.height - self.size.height - self.padding.1, width: 0, height: self.size.height)
+                self.updateSubviews()
+            }, completion: { (b) in
+                self.removeFromSuperview()
+            })
+            break
+        }
+        
         Banner.BANNER_OPEN = false
+        Banner.OPEN_BANNERS -= 1
     }
     
 }

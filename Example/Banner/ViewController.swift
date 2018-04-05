@@ -44,6 +44,9 @@ class ViewController: UIViewController {
     @objc func displayBanner() {
         let banner = Banner(location: BannerLocation.bottomRight)
         banner.size = CGSize(width: 200, height: 40)
+        banner.cornerRadius = 25
+        banner.displayTime = 2
+        banner.padding = (10,10)
         
         let label = UILabel()
         label.backgroundColor = UIColor(red: 0, green: 0.4, blue: 0.6, alpha: 1)
