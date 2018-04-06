@@ -10,7 +10,7 @@ import Foundation
 public extension UIViewController {
     
     /** Display a banner on top of the current view controller. */
-    public func showBanner(banner: Banner, duration: Double) {
+    public func showBanner(banner: Banner) {
         if Banner.OPEN_BANNERS >= Banner.MAX_BANNERS { return }
         else {
             Banner.OPEN_BANNERS += 1
@@ -46,35 +46,35 @@ public extension UIViewController {
         UIView.setAnimationCurve(UIViewAnimationCurve.easeOut)
         switch banner.location {
         case .topLeft:
-            UIView.animate(withDuration: duration, animations: {
+            UIView.animate(withDuration: banner.animationDuration, animations: {
                 banner.frame = CGRect(x: banner.frame.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer(dismissDuration: duration)
+                banner.startTimer()
             }) 
             break
         case .topRight:
-            UIView.animate(withDuration: duration, animations: {
+            UIView.animate(withDuration: banner.animationDuration, animations: {
                 banner.frame = CGRect(x: to.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer(dismissDuration: duration)
+                banner.startTimer()
             })
             break
         case .bottomLeft:
-            UIView.animate(withDuration: duration, animations: {
+            UIView.animate(withDuration: banner.animationDuration, animations: {
                 banner.frame = CGRect(x: banner.frame.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer(dismissDuration: duration)
+                banner.startTimer()
             })
             break
         case .bottomRight:
-            UIView.animate(withDuration: duration, animations: {
+            UIView.animate(withDuration: banner.animationDuration, animations: {
                 banner.frame = CGRect(x: to.minX, y: banner.frame.minY, width: to.width, height: banner.frame.height)
                 banner.updateSubviews()
             }, completion: { (b) in
-                banner.startTimer(dismissDuration: duration)
+                banner.startTimer()
             }) 
             break
         }

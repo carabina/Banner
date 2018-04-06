@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Banner'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of Banner.'
+  s.version          = '1.0.0'
+  s.summary          = 'Banner creates small, non-intrusive alerts in the corners of a UIViewController.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+When you want to display a message to a user but don't want to display a popup that the user has to dismiss, Banner comes in handy by creating a small, non-intrusive alert view in the corners of a UIViewController. Now, instead of taking up the entire screen with a dialog, just use Banner to display a UIView in either the top left, top right, bottom left, or bottom right corner of an iOS screen.
                        DESC
 
   s.homepage         = 'https://github.com/authman2/Banner'

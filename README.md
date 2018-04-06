@@ -5,6 +5,8 @@
 [![License](https://img.shields.io/cocoapods/l/Banner.svg?style=flat)](http://cocoapods.org/pods/Banner)
 [![Platform](https://img.shields.io/cocoapods/p/Banner.svg?style=flat)](http://cocoapods.org/pods/Banner)
 
+Banner allows you to create small, non-intrusive alert views from UIViewControllers.
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.

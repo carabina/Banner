@@ -43,7 +43,7 @@
 		8C34C3D05AC8B4F93C3A3D43 /* Pods_Banner_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Banner_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7CA7798A74B41D05B96AF58 /* Pods-Banner_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Banner_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Banner_Tests/Pods-Banner_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D3CB4FF0B98EB340CFE302FE /* Pods-Banner_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Banner_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Banner_Example/Pods-Banner_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D8AB082FE70C35523601C967 /* Banner.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Banner.podspec; path = ../Banner.podspec; sourceTree = "<group>"; };
+		D8AB082FE70C35523601C967 /* Banner.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Banner.podspec; path = ../Banner.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		EF0D9F8B6AF73CC79B2A94AC /* Pods_Banner_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Banner_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 

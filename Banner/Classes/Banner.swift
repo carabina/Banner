@@ -64,8 +64,8 @@ public class Banner: UIView {
     /** How long the timer should stay on screen in seconds. 0 means it never goes away. */
     public var displayTime: Double
     
-    /** The duration of time to animate the dismiss. */
-    internal var dismissAnimationTime: Double
+    /** The amount of time to animate the banner. */
+    public var animationDuration: Double
     
     
     
@@ -83,7 +83,7 @@ public class Banner: UIView {
         padding = (20, 20)
         cornerRadius = 0
         displayTime = 1
-        dismissAnimationTime = 1
+        animationDuration = 1
         super.init(coder: aDecoder)
         
         self.config()
@@ -95,7 +95,7 @@ public class Banner: UIView {
         self.padding = (20, 20)
         self.cornerRadius = 0
         self.displayTime = 1
-        self.dismissAnimationTime = 1
+        self.animationDuration = 1
         
         switch location {
         case .topLeft:
@@ -153,7 +153,7 @@ public class Banner: UIView {
     internal func updateSubviews() {
         for view in subviews {
             view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-            view.layer.cornerRadius = layer.borderWidth
+            view.layer.cornerRadius = self.cornerRadius
         }
     }
     
@@ -161,13 +161,14 @@ public class Banner: UIView {
     /** Sets the view to be displayed on this banner. */
     public func setView(view: UIView) {
         view.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
+        view.clipsToBounds = true
         addSubview(view)
     }
     
     
     /** Starts the timer to dismiss this banner. */
-    internal func startTimer(dismissDuration: Double) {
-        self.dismissAnimationTime = dismissDuration
+    internal func startTimer() {
+        if displayTime == 0 { return }
         
         let _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(Banner.decrementTimer(timer:)), userInfo: nil, repeats: true)
     }
@@ -187,7 +188,7 @@ public class Banner: UIView {
         
         switch location {
         case .topLeft:
-            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.frame = CGRect(x: self.padding.0, y: self.padding.1, width: 0, height: self.size.height)
                 self.updateSubviews()
             }, completion: { (b) in
@@ -195,7 +196,7 @@ public class Banner: UIView {
             })
             break
         case .topRight:
-            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.frame = CGRect(x: UIScreen.main.bounds.maxX - self.padding.0, y: self.padding.1, width: 0, height: self.size.height)
                 self.updateSubviews()
             }, completion: { (b) in
@@ -203,7 +204,7 @@ public class Banner: UIView {
             })
             break
         case .bottomLeft:
-            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.frame = CGRect(x: self.padding.0, y: UIScreen.main.bounds.height - self.size.height - self.padding.1, width: 0, height: self.size.height)
                 self.updateSubviews()
             }, completion: { (b) in
@@ -211,7 +212,7 @@ public class Banner: UIView {
             })
             break
         case .bottomRight:
-            UIView.animate(withDuration: self.dismissAnimationTime, animations: {
+            UIView.animate(withDuration: self.animationDuration, animations: {
                 self.frame = CGRect(x: UIScreen.main.bounds.width - self.padding.0, y: UIScreen.main.bounds.height - self.size.height - self.padding.1, width: 0, height: self.size.height)
                 self.updateSubviews()
             }, completion: { (b) in
